@@ -1,0 +1,684 @@
+/* ==============================
+   Layout Page: Steps + Picker UI
+   ✅ Scoped to .pb-layout agar tidak nabrak header/footer
+============================== */
+
+.pb-layout{
+  /* variables hanya berlaku di dalam main ini */
+  --bg: #fff;
+  --page: #fafafa;
+  --text: #202124;
+  --muted: #5f6368;
+  --border: #dadce0;
+  --chip: #f1f3f4;
+  --chipHover: #e8eaed;
+  --shadow: 0 8px 24px rgba(0, 0, 0, .12);
+  --radius: 16px;
+  --pill: 999px;
+  --focus: 0 0 0 3px rgba(26, 115, 232, .2);
+
+  --softBlue: #6ea8ff;
+  --softBlueHover: #5b9bff;
+  --softBlueActive: #4a8dff;
+
+  max-width: none;
+  margin: 0;
+  padding: 26px 20px 48px;
+}
+
+/* container wizard */
+.pb-layout .pb-wizard{ max-width: 1120px; margin: 0 auto; }
+
+.pb-layout .pb-shell{
+  background: rgba(255,255,255,.65);
+  border: 1px solid rgba(17,24,39,.08);
+  border-radius: 28px;
+  box-shadow: 0 10px 26px rgba(17,24,39,.08);
+  padding: 22px;
+  backdrop-filter: blur(10px);
+}
+
+/* ===== Steps bar ===== */
+.pb-layout .pb-steps{
+  display:flex;
+  gap:14px;
+  justify-content:center;
+  align-items:center;
+  padding: 8px 0 18px;
+  flex-wrap:wrap;
+}
+
+.pb-layout .pb-step{
+  appearance: none;
+  border: 0;
+  background: transparent;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  cursor:pointer;
+  padding: 6px 10px;
+}
+
+.pb-layout .pb-dot{
+  width:54px;height:54px;
+  border-radius:999px;
+  background: rgba(59,130,246,.12);
+  border: 1px solid rgba(59,130,246,.35);
+  display:grid;
+  place-items:center;
+  color: #3B82F6;
+}
+
+.pb-layout .pb-dot svg{ width:24px;height:24px; stroke: currentColor; }
+
+.pb-layout .pb-dot-label{
+  font-family: "Open Sans", Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  color: #111827;
+}
+
+.pb-layout .pb-step.pb-step-active .pb-dot{
+  background: rgba(59,130,246,.18);
+  border-color: rgba(59,130,246,.55);
+}
+
+.pb-layout .pb-step.pb-step-active .pb-dot-label{ color:#111827; }
+
+/* ===== LOCKED steps ===== */
+.pb-layout .pb-step.pb-step-locked{
+  opacity: .45;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.pb-layout .pb-step.pb-step-locked .pb-dot{
+  background:#f3f3f3;
+  border-color:#e2e2e2;
+  color:#9aa0a6;
+}
+
+.pb-layout .pb-step.pb-step-locked .pb-dot-label{ color:#9aa0a6; }
+
+/* ===== Template picker (scoped) ===== */
+.pb-layout .wrap{
+  max-width: 1100px;
+  margin: 10px auto 0;
+  padding: 0 10px 10px;
+}
+
+.pb-layout .pickWrap{
+  background: linear-gradient(180deg, #f6f7f7 0%, #f2f3f3 100%);
+  border: 1px solid #e6e8ea;
+  border-radius: 22px;
+  padding: 34px 18px 18px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, .06);
+  overflow: hidden;
+}
+
+.pb-layout .pickTitle{
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 48px;
+  text-align: center;
+  margin: 0 0 6px 0;
+  letter-spacing: .5px;
+  color: #18202b;
+}
+
+.pb-layout .pickSub{
+  text-align: center;
+  margin: 0 0 18px 0;
+  color: #6b7280;
+  font-size: 20px;
+  font-family: "Open Sans", Arial, sans-serif;
+}
+
+.pb-layout .pickCards{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  max-width: 940px;
+  margin: 0 auto;
+}
+
+.pb-layout .pickCard{
+  background: #fff;
+  border: 1px solid #e6e8ea;
+  border-radius: 18px;
+  padding: 14px 14px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  transition: transform .08s ease, border-color .08s ease, box-shadow .08s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .04);
+
+  /* ✅ teks di card selalu left */
+  text-align: left;
+}
+
+.pb-layout .pickCard:hover{ transform: translateY(-1px); }
+
+.pb-layout .pickCard.selected{
+  border-color: rgba(26, 115, 232, .45);
+  box-shadow: 0 0 0 3px rgba(26, 115, 232, .14), 0 8px 18px rgba(0, 0, 0, .08);
+}
+
+.pb-layout .pickIcon{
+  width: 46px;
+  height: 46px;
+  border: 1px solid #e6e8ea;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fafafa;
+  flex: 0 0 auto;
+}
+
+.pb-layout .pickCard.selected .pickIcon{
+  border-color: rgba(26, 115, 232, .4);
+  background: #eef3fd;
+}
+
+.pb-layout .pickMeta{
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  font-family: "Open Sans", Arial, sans-serif;
+
+  /* ✅ pastikan teks meta left */
+  text-align: left;
+  align-items: flex-start;
+}
+
+.pb-layout .pickMeta .t{ font-weight: 800; font-size: 15px; text-align:left; }
+.pb-layout .pickMeta .d{ color: #6b7280; font-size: 13px; line-height: 1.25; text-align:left; }
+
+.pb-layout .pickDivider{
+  height: 1px;
+  background: #e6e8ea;
+  max-width: 980px;
+  margin: 18px auto 0;
+}
+
+.pb-layout .pickActions{
+  max-width: 980px;
+  margin: 10px auto 0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 0 4px;
+}
+
+.pb-layout .linkBtn{
+  border: none;
+  background: transparent;
+  color: #1a73e8;
+  cursor: pointer;
+  font-size: 13px;
+  padding: 6px 8px;
+  border-radius: 10px;
+}
+
+.pb-layout .linkBtn:hover{ background: #eef3fd; }
+.pb-layout .linkBtn:focus{ outline: none; box-shadow: var(--focus); }
+
+.pb-layout .modeWrap{
+  max-width: 940px;
+  margin: 16px auto 0;
+  display: none;
+}
+
+.pb-layout .modeTitle{
+  font-weight: 900;
+  font-size: 14px;
+  margin: 0 0 10px 2px;
+  color: #111827;
+  font-family: "Open Sans", Arial, sans-serif;
+}
+
+.pb-layout .modeCards{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+@media (max-width: 860px){
+  .pb-layout .pickTitle{ font-size: 40px; }
+  .pb-layout .pickSub{ font-size: 18px; }
+  .pb-layout .pickCards{ grid-template-columns: 1fr; }
+  .pb-layout .modeCards{ grid-template-columns: 1fr; }
+}
+
+/* top filter bar */
+.pb-layout .top{
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .04);
+  margin-top: 14px;
+}
+
+.pb-layout .row{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.pb-layout .search{
+  flex: 1 1 260px;
+  min-width: 220px;
+  position: relative;
+}
+
+.pb-layout .search input{
+  width: 100%;
+  height: 40px;
+  border-radius: var(--pill);
+  border: 1px solid var(--border);
+  padding: 0 12px 0 38px;
+  font-size: 14px;
+  outline: none;
+  background: #fff;
+  font-family: "Open Sans", Arial, sans-serif;
+}
+
+.pb-layout .search input:focus{
+  box-shadow: var(--focus);
+  border-color: #c7d7fb;
+}
+
+.pb-layout .search .icon{
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: var(--muted);
+}
+
+.pb-layout .chips{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.pb-layout .chip{ position: relative; }
+
+.pb-layout .chip button{
+  height: 34px;
+  padding: 0 12px;
+  border-radius: var(--pill);
+  border: 1px solid var(--border);
+  background: var(--chip);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 13px;
+  color: var(--text);
+  font-family: "Open Sans", Arial, sans-serif;
+}
+
+.pb-layout .chip button:hover{ background: var(--chipHover); }
+.pb-layout .chip button:focus{ outline: none; box-shadow: var(--focus); }
+
+.pb-layout .chip .label{ font-weight: 800; }
+.pb-layout .chip .value{
+  color: var(--muted);
+  font-weight: 500;
+  max-width: 170px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.pb-layout .chev{ width: 14px; height: 14px; opacity: .85; }
+
+.pb-layout .sortBtn{
+  height: 34px;
+  border-radius: var(--pill);
+  border: 1px solid var(--border);
+  background: #fff;
+  padding: 0 10px;
+  cursor: pointer;
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text);
+  font-family: "Open Sans", Arial, sans-serif;
+}
+
+.pb-layout .sortBtn:hover{ background: #f8f9fa; }
+.pb-layout .sortBtn:focus{ outline: none; box-shadow: var(--focus); }
+
+.pb-layout .sortIcon{ width: 16px; height: 16px; display: inline-block; color: var(--muted); }
+
+/* ✅ ini penting: .btn DISCOPE, jadi header .btn tidak kena */
+.pb-layout .btn{
+  height: 34px;
+  border-radius: var(--pill);
+  border: 1px solid var(--border);
+  background: #fff;
+  padding: 0 12px;
+  cursor: pointer;
+  font-size: 13px;
+  font-family: "Open Sans", Arial, sans-serif;
+}
+
+.pb-layout .btn:hover{ background: #f8f9fa; }
+.pb-layout .btn:focus{ outline: none; box-shadow: var(--focus); }
+
+/* dropdown */
+.pb-layout .menu{
+  position: absolute;
+  top: 42px;
+  left: 0;
+  width: 320px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  display: none;
+  z-index: 20;
+  overflow: hidden;
+}
+.pb-layout .menu.open{ display: block; }
+
+.pb-layout .menu header{
+  padding: 10px 12px;
+  border-bottom: 1px solid #eef0f1;
+}
+.pb-layout .menu header .title{ font-weight: 900; font-size: 13px; font-family: "Open Sans", Arial, sans-serif; }
+
+.pb-layout .menu .filterSearch{
+  padding: 10px 12px;
+  border-bottom: 1px solid #eef0f1;
+}
+.pb-layout .menu .filterSearch input{
+  width: 100%;
+  height: 34px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  padding: 0 10px;
+  outline: none;
+  font-size: 13px;
+  font-family: "Open Sans", Arial, sans-serif;
+}
+.pb-layout .menu .filterSearch input:focus{ box-shadow: var(--focus); border-color: #c7d7fb; }
+
+.pb-layout .menu .options{
+  max-height: 260px;
+  overflow: auto;
+  padding: 6px 0;
+}
+
+.pb-layout .opt{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  cursor: pointer;
+  font-size: 13px;
+  gap: 10px;
+  font-family: "Open Sans", Arial, sans-serif;
+}
+.pb-layout .opt:hover{ background: #f8f9fa; }
+.pb-layout .opt.selected{
+  background: #eef3fd;
+  border-left: 3px solid #1a73e8;
+  padding-left: 9px;
+}
+.pb-layout .opt.disabled{
+  opacity: .28;
+  filter: grayscale(1);
+  cursor: not-allowed;
+}
+.pb-layout .opt .lock{ width: 16px; height: 16px; opacity: .75; flex: 0 0 auto; }
+
+/* results */
+.pb-layout .results{
+  margin-top: 14px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .04);
+  overflow: hidden;
+}
+
+.pb-layout .resultsHead{
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+  background: #f8f9fa;
+  font-size: 13px;
+  font-family: "Open Sans", Arial, sans-serif;
+}
+
+.pb-layout .pickedPill{
+  border: 1px solid var(--border);
+  background: #fff;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 12px;
+  color: var(--text);
+}
+
+.pb-layout .grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  padding: 14px;
+}
+
+.pb-layout .card{
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #fff;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 220px;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  transition: box-shadow .12s ease, border-color .12s ease, transform .08s ease, opacity .12s ease, filter .12s ease;
+
+  text-align: left;
+}
+.pb-layout .card:hover{ transform: translateY(-1px); }
+
+.pb-layout .card.isSelected{
+  border-color: rgba(26, 115, 232, .55);
+  box-shadow: 0 0 0 3px rgba(26, 115, 232, .14);
+  transform: translateY(-4px);
+}
+
+.pb-layout .card.locked{
+  opacity: .24;
+  filter: grayscale(1) contrast(.9);
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.pb-layout .card.locked .tryBtn{
+  background: #c9d7f2;
+  color: #fff;
+  cursor: not-allowed;
+}
+
+.pb-layout .selectBadge{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: rgba(26, 115, 232, .95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, .14);
+  opacity: 0;
+  transform: scale(.92);
+  transition: opacity .12s ease, transform .12s ease;
+  pointer-events: none;
+}
+.pb-layout .card.isSelected .selectBadge{ opacity: 1; transform: scale(1); }
+.pb-layout .selectBadge svg{ width: 16px; height: 16px; }
+
+.pb-layout .thumb{
+  height: 160px;
+  background: #f1f3f4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 10px;
+}
+.pb-layout .thumb img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  border-radius: 10px;
+}
+
+.pb-layout .thumb .fallback{
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  gap: 6px;
+  padding: 10px;
+  text-align: center;
+  font-family: "Open Sans", Arial, sans-serif;
+}
+
+.pb-layout .fallback .ext{
+  font-weight: 900;
+  font-size: 12px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+
+.pb-layout .meta{
+  padding: 10px 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+}
+
+.pb-layout .name{
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1.25;
+
+  /* vendor + standard */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+
+  overflow: hidden;
+  min-height: 32px;
+  font-family: "Open Sans", Arial, sans-serif;
+  text-align: left;
+}
+
+.pb-layout .cardActions{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.pb-layout .tryBtn{
+  height: 34px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, .0);
+  background: var(--softBlue);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: none;
+  transition: background .12s ease, transform .08s ease;
+}
+.pb-layout .tryBtn:hover{ background: var(--softBlueHover); }
+.pb-layout .tryBtn:active{ background: var(--softBlueActive); transform: translateY(1px); }
+.pb-layout .tryBtn:focus{ outline: none; box-shadow: var(--focus); }
+
+/* toast (element ada di luar .pb-layout, jadi tetap global) */
+.toast{
+  position: fixed;
+  left: 50%;
+  bottom: 22px;
+  transform: translateX(-50%);
+  background: #111827;
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 13px;
+  box-shadow: 0 16px 30px rgba(0, 0, 0, .22);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s ease, transform .18s ease;
+  z-index: 999;
+  font-family: "Open Sans", Arial, sans-serif;
+}
+.toast.show{
+  opacity: 1;
+  transform: translateX(-50%) translateY(-6px);
+}
+
+@media (max-width: 640px){
+  .pb-layout .menu{ width: 92vw; }
+  .pb-layout .grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .pb-layout .thumb{ height: 120px; padding: 8px; }
+  .pb-layout .name{ font-size: 12px; }
+  .pb-layout .card{ min-height: 190px; }
+}
+
+/* ==============================
+   OVERRIDE: LEFT ALIGN TEXT
+   (taruh PALING BAWAH layout.css)
+============================== */
+
+/* Judul + subjudul + judul mode (left & sejajar grid) */
+.pb-layout .pickTitle,
+.pb-layout .pickSub,
+.pb-layout .modeTitle{
+  text-align: left;
+  max-width: 940px;      /* biar sejajar dengan grid */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ✅ teks di kartu pilihan (Photostrip/4R/Polaroid & Single/Mix) tetap left */
+.pb-layout .pickCard,
+.pb-layout .pickMeta,
+.pb-layout .pickMeta .t,
+.pb-layout .pickMeta .d{
+  text-align: left;
+}

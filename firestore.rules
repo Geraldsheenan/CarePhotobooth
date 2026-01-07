@@ -1,0 +1,92 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isString(x){ return x is string; }
+    function isBool(x){ return x is bool; }
+    function isInt(x){ return x is int; }
+    function isTs(x){ return x is timestamp; }
+
+    // ✅ dibuat sedikit lebih fleksibel (tetap aman):
+    // 4-30 chars uppercase A-Z0-9 (sesuai UI kamu & access_gate.js)
+    function isCode(s){
+      return isString(s) && s.matches('^[A-Z0-9]{4,30}$');
+    }
+
+    function baseValid(d){
+      return isCode(d.code)
+        && isString(d.clientName) && d.clientName.size() >= 1 && d.clientName.size() <= 60
+        && isString(d.eventName) && d.eventName.size() >= 1 && d.eventName.size() <= 80
+        && isBool(d.active)
+        && isInt(d.maxUses) && d.maxUses >= 1 && d.maxUses <= 9999
+        && isInt(d.usedCount) && d.usedCount >= 0 && d.usedCount <= d.maxUses
+        && isTs(d.createdAt)
+        && isTs(d.updatedAt);
+    }
+
+    function lastUsedValid(d){
+      // optional lastUsedAt boleh null atau timestamp
+      return (!('lastUsedAt' in d) || d.lastUsedAt == null || isTs(d.lastUsedAt));
+    }
+
+    // ✅ aturan inti (dipakai di 2 collection)
+    function accessRules(codeId) {
+      // return boolean expression via "allow ..." di masing-masing match
+      return true;
+    }
+
+    // =========================================================
+    // ✅ COLLECTION LAMA: access_codes
+    // =========================================================
+    match /access_codes/{codeId} {
+
+      // user & admin bisa read (supaya user bisa validasi kode)
+      allow read: if true;
+
+      // create kode baru
+      allow create: if
+        codeId == request.resource.data.code &&
+        baseValid(request.resource.data) &&
+        lastUsedValid(request.resource.data);
+
+      // update admin + update user (increment usedCount)
+      allow update: if
+        request.resource.data.code == resource.data.code &&
+        baseValid(request.resource.data) &&
+        request.resource.data.createdAt == resource.data.createdAt &&
+        (
+          request.resource.data.usedCount == resource.data.usedCount ||
+          request.resource.data.usedCount == resource.data.usedCount + 1
+        ) &&
+        lastUsedValid(request.resource.data);
+
+      // delete (tetap kamu set true seperti sebelumnya)
+      allow delete: if true;
+    }
+
+    // =========================================================
+    // ✅ COLLECTION BARU: accessCodes (untuk kompatibel dgn JS baru)
+    // =========================================================
+    match /accessCodes/{codeId} {
+
+      allow read: if true;
+
+      allow create: if
+        codeId == request.resource.data.code &&
+        baseValid(request.resource.data) &&
+        lastUsedValid(request.resource.data);
+
+      allow update: if
+        request.resource.data.code == resource.data.code &&
+        baseValid(request.resource.data) &&
+        request.resource.data.createdAt == resource.data.createdAt &&
+        (
+          request.resource.data.usedCount == resource.data.usedCount ||
+          request.resource.data.usedCount == resource.data.usedCount + 1
+        ) &&
+        lastUsedValid(request.resource.data);
+
+      allow delete: if true;
+    }
+  }
+}

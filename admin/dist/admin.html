@@ -1,0 +1,106 @@
+<!-- admin/dist/admin.html -->
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Photobooth Admin</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="./admin.css" />
+</head>
+<body>
+
+  <div class="app">
+    <aside class="side">
+      <div class="brand">
+        <div class="brandTitle">Photobooth Admin</div>
+        <div class="brandSub">Buat kode unik untuk membuka Photobooth.</div>
+      </div>
+
+      <div class="card">
+        <div class="cardTitle">Data</div>
+
+        <label class="lbl">Nama Client</label>
+        <input class="inp" id="clientName" placeholder="Contoh: Sheenan" />
+
+        <label class="lbl">Nama Wedding / Event</label>
+        <input class="inp" id="eventName" placeholder="Contoh: Sheenan Wedding" />
+
+        <label class="lbl">Kode Unik</label>
+        <div class="row">
+          <input class="inp mono" id="code" placeholder="AUTO / INPUT" />
+          <button class="btn" id="btnGen" type="button">Generate</button>
+        </div>
+        <div class="hint">Huruf & angka saja. Akan disimpan sebagai UPPERCASE.</div>
+
+        <label class="lbl">Status</label>
+        <div class="seg">
+          <button class="segBtn active" id="stActive" type="button">Aktif</button>
+          <button class="segBtn" id="stInactive" type="button">Nonaktif</button>
+        </div>
+
+        <label class="lbl">Max Uses (optional)</label>
+        <input class="inp" id="maxUses" type="number" min="1" max="9999" placeholder="Contoh: 2 (default 9999)" />
+        <div class="hint">Kalau kamu belum pakai counter, biarkan 9999.</div>
+
+        <div class="actions">
+          <button class="btnPrimary" id="btnSave" type="button">Simpan Kode</button>
+          <button class="btn" id="btnClear" type="button">Clear</button>
+        </div>
+
+        <div class="note">
+          User akan diminta memasukkan <b>Kode Unik</b> saat klik menu Photobooth.
+        </div>
+      </div>
+
+      <a class="back" href="/webphotobooth/index.html">← Kembali ke Home</a>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <h1 class="h1">Access Codes</h1>
+          <div class="sub">Daftar kode yang dibuat admin (real-time dari Firestore).</div>
+        </div>
+
+        <div class="searchWrap">
+          <input class="search" id="q" placeholder="Cari (kode / client / event)..." />
+        </div>
+      </div>
+
+      <div class="tableCard">
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th>Kode</th>
+              <th>Nama Client</th>
+              <th>Event</th>
+              <th>Aktif</th>
+              <th>Used</th>
+              <th class="right">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="tbody">
+            <tr><td colspan="6" class="muted">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- Firebase (compat) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <script src="./firebase-config.js"></script>
+  <script src="./admin.js"></script>
+</body>
+</html>

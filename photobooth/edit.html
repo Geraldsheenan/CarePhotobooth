@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Care Photobooth - Edit</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Open+Sans:wght@400;600;700&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="../webphotobooth/style.css">
+  <link rel="stylesheet" href="./css/edit.css">
+</head>
+
+<body class="photobooth-page">
+  <header id="header-placeholder" class="header"></header>
+
+  <main class="pb-main pb-edit">
+    <section class="pb-wizard" aria-live="polite">
+      <div class="pb-shell">
+
+        <!-- Steps -->
+        <div class="pb-steps" role="navigation" aria-label="Photobooth Steps">
+          <button type="button" class="pb-step" data-step="layout" data-href="layout.html">
+            <span class="pb-dot" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="4" y="4" width="7" height="7" rx="1.6" stroke="currentColor" stroke-width="2" />
+                <rect x="13" y="4" width="7" height="7" rx="1.6" stroke="currentColor" stroke-width="2" />
+                <rect x="4" y="13" width="7" height="7" rx="1.6" stroke="currentColor" stroke-width="2" />
+                <rect x="13" y="13" width="7" height="7" rx="1.6" stroke="currentColor" stroke-width="2" />
+              </svg>
+            </span>
+            <span class="pb-dot-label">Layout</span>
+          </button>
+
+          <button type="button" class="pb-step" data-step="snap" data-href="snapcam.html">
+            <span class="pb-dot" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="4" y="7" width="16" height="13" rx="2" stroke="currentColor" stroke-width="2" />
+                <path d="M9 7l1.3-2h3.4L15 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                <circle cx="12" cy="14" r="3" stroke="currentColor" stroke-width="2" />
+              </svg>
+            </span>
+            <span class="pb-dot-label">Snap</span>
+          </button>
+
+          <button type="button" class="pb-step pb-step-active" data-step="edit" data-href="edit.html">
+            <span class="pb-dot" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 20h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4L16.5 3.5Z"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="pb-dot-label">Edit</span>
+          </button>
+
+          <button type="button" class="pb-step" data-step="export" data-href="export.html">
+            <span class="pb-dot" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 3v10" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                <path d="M8 9l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              </svg>
+            </span>
+            <span class="pb-dot-label">Export</span>
+          </button>
+        </div>
+
+        <!-- Header -->
+        <div class="editHead">
+          <div class="editTitleWrap">
+            <h1 class="editTitle">Edit your template</h1>
+            <p class="editSub">
+              Ubah warna frame template dan tambahkan teks. Drag teks langsung di gambar.
+            </p>
+          </div>
+        </div>
+
+        <div class="editGrid">
+          <!-- LEFT: Preview + Actions + Customize -->
+          <section class="leftCol" aria-label="Edit preview and tools">
+            <div class="previewCard">
+              <div class="stageOuter">
+                <!-- stage (hitam) harus lancip -->
+                <div class="stage" id="stage">
+                  <canvas id="editCanvas"></canvas>
+                  <div class="textLayer" id="textLayer" aria-label="Text layer"></div>
+
+                  <div class="stageHint">Drag teks: klik teks lalu geser.</div>
+                </div>
+              </div>
+
+              <div class="editActions">
+                <button class="btn" id="btnBack" type="button">Back: Snap</button>
+                <button class="btnPrimary" id="btnNext" type="button">Next: Export</button>
+              </div>
+            </div>
+
+            <!-- Customize UNDER camera -->
+            <div class="customCard" aria-label="Customize">
+              <div class="cardTitle">Customize</div>
+
+              <div class="cardSectionTitle">Template Color</div>
+
+              <div class="row">
+                <div class="label">Enable tint</div>
+                <label class="switch" aria-label="Enable tint">
+                  <input type="checkbox" id="tintEnable" checked>
+                  <span class="slider"></span>
+                </label>
+              </div>
+
+              <div class="row">
+                <div class="label">Color</div>
+                <div class="inline">
+                  <input type="color" id="tintColor" value="#000000" aria-label="Tint color">
+                  <input type="text" id="tintHex" class="hexInput" value="#000000" aria-label="Tint hex">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="label">Opacity</div>
+                <input type="range" id="tintOpacity" min="0" max="100" value="100" />
+              </div>
+
+              <div class="row">
+                <button class="btn" id="btnResetTint" type="button">Reset Color</button>
+              </div>
+
+              <div class="divider"></div>
+
+              <div class="cardSectionTitle">Text</div>
+
+              <div class="row">
+                <div class="label">Text</div>
+                <input type="text" id="txtValue" placeholder="Contoh: CARE PHOTOBOOTH" />
+              </div>
+
+              <div class="row">
+                <div class="label">Font</div>
+                <select id="txtFont">
+                  <option value="Open Sans" selected>Open Sans</option>
+                  <option value="Cormorant Garamond">Cormorant Garamond</option>
+                  <option value="Arial">Arial</option>
+                  <option value="Georgia">Georgia</option>
+                  <option value="Times New Roman">Times New Roman</option>
+                  <option value="Verdana">Verdana</option>
+                </select>
+              </div>
+
+              <div class="row">
+                <div class="label">Size</div>
+                <input type="range" id="txtSize" min="14" max="220" value="56" />
+              </div>
+
+              <div class="row">
+                <div class="label">Color</div>
+                <div class="inline">
+                  <input type="color" id="txtColor" value="#ffffff" aria-label="Text color">
+                  <input type="text" id="txtHex" class="hexInput" value="#FFFFFF" aria-label="Text hex">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="label">Bold</div>
+                <label class="switch" aria-label="Bold">
+                  <input type="checkbox" id="txtBold" checked>
+                  <span class="slider"></span>
+                </label>
+              </div>
+
+              <div class="row actionsRow">
+                <button class="btnPrimary" id="btnApplyText" type="button">Apply Text</button>
+                <button class="btn" id="btnRemoveText" type="button">Remove</button>
+              </div>
+
+              <div class="tip">
+                Tips: Setelah Apply Text, klik teks di gambar lalu drag untuk pindah posisi.
+              </div>
+            </div>
+          </section>
+
+          <!-- RIGHT: Data only -->
+          <aside class="dataCard" aria-label="Data">
+            <div class="cardTitle">Data</div>
+
+            <div class="dataGrid">
+              <div class="dataRow">
+                <div class="dataLabel">Template</div>
+                <div class="dataValue" id="dTemplate">-</div>
+              </div>
+              <div class="dataRow">
+                <div class="dataLabel">Jenis</div>
+                <div class="dataValue" id="dJenis">-</div>
+              </div>
+              <div class="dataRow">
+                <div class="dataLabel">Orientasi</div>
+                <div class="dataValue" id="dOrientasi">-</div>
+              </div>
+
+              <div class="divider"></div>
+
+              <div class="dataRow">
+                <div class="dataLabel">Template HEX</div>
+                <div class="dataValue mono" id="dTintHex">#000000</div>
+              </div>
+              <div class="dataRow">
+                <div class="dataLabel">Template Opacity</div>
+                <div class="dataValue" id="dTintOpacity">100%</div>
+              </div>
+
+              <div class="divider"></div>
+
+              <div class="dataRow">
+                <div class="dataLabel">Font</div>
+                <div class="dataValue" id="dFont">Open Sans</div>
+              </div>
+              <div class="dataRow">
+                <div class="dataLabel">Font Size</div>
+                <div class="dataValue" id="dFontSize">56px</div>
+              </div>
+              <div class="dataRow">
+                <div class="dataLabel">Font HEX</div>
+                <div class="dataValue mono" id="dFontHex">#FFFFFF</div>
+              </div>
+            </div>
+          </aside>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="../webphotobooth/main.js"></script>
+  <script src="./js/edit.js"></script>
+</body>
+</html>

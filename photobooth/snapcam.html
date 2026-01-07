@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Care Photobooth - Snap</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Open+Sans:wght@400;600;700&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="../webphotobooth/style.css">
+  <link rel="stylesheet" href="./css/snapcam.css">
+</head>
+
+<body class="photobooth-page">
+  <header id="header-placeholder" class="header"></header>
+
+  <main class="pb-main pb-snap">
+    <section class="pb-wizard" aria-live="polite">
+      <div class="pb-shell">
+
+        <!-- Steps -->
+        <div class="pb-steps" role="navigation" aria-label="Photobooth Steps">
+          <button type="button" class="pb-step" data-step="layout" data-href="layout.html">
+            <span class="pb-dot" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="4" y="4" width="7" height="7" rx="1.6" stroke="currentColor" stroke-width="2" />
+                <rect x="13" y="4" width="7" height="7" rx="1.6" stroke="currentColor" stroke-width="2" />
+                <rect x="4" y="13" width="7" height="7" rx="1.6" stroke="currentColor" stroke-width="2" />
+                <rect x="13" y="13" width="7" height="7" rx="1.6" stroke="currentColor" stroke-width="2" />
+              </svg>
+            </span>
+            <span class="pb-dot-label">Layout</span>
+          </button>
+
+          <button type="button" class="pb-step pb-step-active" data-step="snap" data-href="snapcam.html">
+            <span class="pb-dot" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="4" y="7" width="16" height="13" rx="2" stroke="currentColor" stroke-width="2" />
+                <path d="M9 7l1.3-2h3.4L15 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                <circle cx="12" cy="14" r="3" stroke="currentColor" stroke-width="2" />
+              </svg>
+            </span>
+            <span class="pb-dot-label">Snap</span>
+          </button>
+
+          <button type="button" class="pb-step" data-step="edit" data-href="edit.html">
+            <span class="pb-dot" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 20h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4L16.5 3.5Z"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="pb-dot-label">Edit</span>
+          </button>
+
+          <button type="button" class="pb-step" data-step="export" data-href="export.html">
+            <span class="pb-dot" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 3v10" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                <path d="M8 9l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              </svg>
+            </span>
+            <span class="pb-dot-label">Export</span>
+          </button>
+        </div>
+
+        <!-- Header -->
+        <div class="snapHead">
+          <div class="snapTitleWrap">
+            <h1 class="snapTitle">Take your photos</h1>
+            <p class="snapSub hidden" id="snapSub"></p>
+          </div>
+        </div>
+
+        <div class="snapGrid">
+          <!-- Left: Camera -->
+          <section class="camCard" aria-label="Camera preview">
+
+            <!-- ✅ TOP BAR -->
+            <div class="camCardTop">
+              <div class="camTopLeftControls">
+                <div class="ctlMini ctlMiniTop" title="Mirror hasil foto">
+                  <span class="miniLabel">Mirror</span>
+                  <label class="switch switchMini" aria-label="Mirror toggle">
+                    <input type="checkbox" id="mirrorToggle" checked>
+                    <span class="slider"></span>
+                  </label>
+                </div>
+
+                <div class="ctlMini ctlMiniTop" title="Countdown sebelum capture">
+                  <span class="miniLabel">CD</span>
+                  <select id="countdownSelect" class="ctlSelect ctlSelectMini" aria-label="Countdown">
+                    <option value="0">Off</option>
+                    <option value="1">1s</option>
+                    <option value="3" selected>3s</option>
+                    <option value="5">5s</option>
+                  </select>
+                </div>
+
+                <!-- ✅ File picker -->
+                <div class="ctlMini ctlMiniTop" title="Upload / Drag foto">
+                  <span class="miniLabel">File</span>
+                  <button type="button" id="btnUpload" class="ctlBtnMini" aria-label="Upload photo">
+                    Choose
+                  </button>
+                </div>
+
+                <!-- hidden input -->
+                <input id="filePicker" type="file" accept="image/*" hidden>
+              </div>
+
+              <div class="counter" id="counter">0/0</div>
+            </div>
+
+            <!-- CAMERA -->
+            <div class="camStage mirrored" id="camStage">
+              <video id="video" class="videoMain" playsinline autoplay muted></video>
+
+              <!-- Drag overlay -->
+              <div id="dropOverlay" class="pb-dropOverlay" aria-hidden="true">
+                Drop image here
+              </div>
+
+              <div class="portraitGuide" aria-hidden="true">
+                <div class="portraitFrame"></div>
+                <div class="portraitLabel"></div>
+              </div>
+
+              <div class="camOverlay">
+                <div class="camCenter">
+                  <div class="countdown" id="countdown" aria-live="polite"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ✅ BOTTOM BAR -->
+            <div class="camBar">
+              <!-- ✅ LEFT: BnW toggle -->
+              <div class="camBarLeft">
+                <div class="ctlMini" title="Black and White">
+                  <span class="miniLabel">BnW</span>
+                  <label class="switch switchMini" aria-label="Black and White toggle">
+                    <input type="checkbox" id="bwToggle">
+                    <span class="slider"></span>
+                  </label>
+                </div>
+              </div>
+
+              <button class="btnPrimary btnCapture" id="btnCapture" type="button">
+                <span class="dotRec" aria-hidden="true"></span>
+                Capture
+              </button>
+
+              <div class="camBarRight">
+                <button class="btnIcon" id="btnRetake" type="button" aria-label="Retake last photo" title="Retake">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M3 12a9 9 0 0 1 15.36-6.36" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M18 3v6h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M21 12a9 9 0 0 1-15.36 6.36" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                </button>
+
+                <button class="btn" id="btnRetakeAll" type="button" disabled>Retake All</button>
+              </div>
+            </div>
+
+            <p class="hint hidden"></p>
+          </section>
+
+          <!-- Right -->
+          <aside class="thumbCard" aria-label="Captured photos">
+            <div class="thumbHead">
+              <div class="thumbTitle">Captured</div>
+              <div class="thumbDesc" id="thumbDesc">Belum ada foto.</div>
+            </div>
+
+            <div class="thumbGrid" id="thumbGrid"></div>
+
+            <div class="tplInfo" id="tplInfo">
+              <div class="tplRow">
+                <div class="tplLabel">Template</div>
+                <div class="tplValue" id="tplName">-</div>
+              </div>
+              <div class="tplRow">
+                <div class="tplLabel">Jenis</div>
+                <div class="tplValue" id="tplJenis">-</div>
+              </div>
+              <div class="tplRow">
+                <div class="tplLabel">Orientasi</div>
+                <div class="tplValue" id="tplOrientasi">-</div>
+              </div>
+            </div>
+
+            <div class="tplPreviewWrap">
+              <div class="tplPreviewTitle">Preview Template</div>
+
+              <div class="tplPreview">
+                <img id="tplPreviewImg" alt="Preview template" />
+                <div class="tplPreviewFallback" id="tplPreviewFallback">
+                  Preview template tidak ditemukan
+                </div>
+              </div>
+
+              <div class="tplActions">
+                <button class="btn" id="btnProceed" type="button" disabled>Next: Edit</button>
+              </div>
+            </div>
+          </aside>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="../webphotobooth/main.js"></script>
+  <script src="./js/snapcam.js"></script>
+</body>
+</html>

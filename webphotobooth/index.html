@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Care Photobooth</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+  <header id="header-placeholder" class="header"></header>
+
+  <main id="top" class="page">
+    <h1>Care Photobooth</h1>
+    <p class="body-text">
+      Ini halaman utama. Klik logo di kiri atas untuk kembali ke sini.
+    </p>
+  </main>
+
+  <footer id="footer-placeholder" class="footer"></footer>
+
+  <!-- Firebase (Compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+
+  <!-- Gate (fallback kalau nama file kamu masih "acces_gate.js") -->
+  <script
+    src="./access_gate.js"
+    onerror="
+      console.warn('access_gate.js tidak ketemu, coba acces_gate.js...');
+      var s=document.createElement('script');
+      s.src='./acces_gate.js';
+      document.head.appendChild(s);
+    ">
+  </script>
+
+  <script src="./main.js"></script>
+</body>
+</html>

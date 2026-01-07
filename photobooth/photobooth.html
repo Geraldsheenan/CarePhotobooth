@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Care Photobooth - Photobooth</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Open+Sans:wght@400;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- global -->
+  <link rel="stylesheet" href="../webphotobooth/style.css">
+  <!-- photobooth landing -->
+  <link rel="stylesheet" href="./css/flow.css">
+</head>
+
+<body class="photobooth-page">
+  <header id="header-placeholder" class="header"></header>
+
+  <main id="top" class="pb-main">
+    <!-- LANDING -->
+    <section class="pb-landing" id="pbLanding">
+      <div class="virtual-photobooth-container">
+        <h1 class="virtual-title">Care<br>Virtual<br>Photobooth</h1>
+        <p class="virtual-subtitle">Ambil foto dengan care bersama teman-temanmu!</p>
+        <button class="btn-start" id="pbStartBtn" type="button">Mulai!</button>
+        <div class="secondary-links">
+          <a href="#">Tutorial</a>
+          <a href="#">Kebijakan Privasi</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="footer-placeholder" class="footer"></footer>
+
+  <!-- global (inject header/footer) -->
+  <script src="../webphotobooth/main.js"></script>
+  <!-- photobooth landing logic -->
+  <script src="./js/flow.js"></script>
+</body>
+</html>

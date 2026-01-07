@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Care Photobooth - Layout</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Open+Sans:wght@400;600;700&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="../webphotobooth/style.css">
+  <link rel="stylesheet" href="./css/layout.css">
+</head>
+
+<body class="photobooth-page">
+  <header id="header-placeholder" class="header"></header>
+
+  <!-- ✅ tambah class pb-layout untuk scope CSS (header aman) -->
+  <main class="pb-main pb-layout">
+    <section class="pb-wizard" aria-live="polite">
+      <div class="pb-shell">
+
+        <!-- Steps -->
+        <div class="pb-steps" role="navigation" aria-label="Photobooth Steps">
+          <button type="button" class="pb-step pb-step-active" data-step="layout" data-href="layout.html">
+            <span class="pb-dot" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="4" y="4" width="7" height="7" rx="1.6" stroke="currentColor" stroke-width="2" />
+                <rect x="13" y="4" width="7" height="7" rx="1.6" stroke="currentColor" stroke-width="2" />
+                <rect x="4" y="13" width="7" height="7" rx="1.6" stroke="currentColor" stroke-width="2" />
+                <rect x="13" y="13" width="7" height="7" rx="1.6" stroke="currentColor" stroke-width="2" />
+              </svg>
+            </span>
+            <span class="pb-dot-label">Layout</span>
+          </button>
+
+          <button type="button" class="pb-step" data-step="snap" data-href="snapcam.html">
+            <span class="pb-dot" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="4" y="7" width="16" height="13" rx="2" stroke="currentColor" stroke-width="2" />
+                <path d="M9 7l1.3-2h3.4L15 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                <circle cx="12" cy="14" r="3" stroke="currentColor" stroke-width="2" />
+              </svg>
+            </span>
+            <span class="pb-dot-label">Snap</span>
+          </button>
+
+          <button type="button" class="pb-step" data-step="edit" data-href="edit.html">
+            <span class="pb-dot" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 20h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4L16.5 3.5Z"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="pb-dot-label">Edit</span>
+          </button>
+
+          <button type="button" class="pb-step" data-step="export" data-href="export.html">
+            <span class="pb-dot" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 3v10" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                <path d="M8 9l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              </svg>
+            </span>
+            <span class="pb-dot-label">Export</span>
+          </button>
+        </div>
+
+        <!-- Layout Picker UI -->
+        <div class="wrap">
+          <section class="pickWrap">
+            <h1 class="pickTitle">Pick a layout</h1>
+            <p class="pickSub">Pilih dulu kategori layout, lalu pilih template detailnya.</p>
+
+            <div class="pickCards" role="radiogroup" aria-label="Pick layout">
+              <div class="pickCard" role="radio" aria-checked="false" tabindex="0" data-layout="Photostrip">
+                <div class="pickIcon" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                    <rect x="7" y="4" width="10" height="16" rx="2" stroke="#111827" stroke-width="2" />
+                    <path d="M9 8h6M9 12h6M9 16h6" stroke="#111827" stroke-width="2" stroke-linecap="round" />
+                  </svg>
+                </div>
+                <div class="pickMeta">
+                  <div class="t">Photostrip</div>
+                  <div class="d">Strip vertikal untuk 2–4 foto</div>
+                </div>
+              </div>
+
+              <div class="pickCard" role="radio" aria-checked="false" tabindex="0" data-layout="4R">
+                <div class="pickIcon" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                    <rect x="4" y="6" width="16" height="12" rx="2" stroke="#111827" stroke-width="2" />
+                    <path d="M12 6v12" stroke="#111827" stroke-width="2" />
+                  </svg>
+                </div>
+                <div class="pickMeta">
+                  <div class="t">4R</div>
+                  <div class="d">Template 4R (Landscape/Portrait) 1–6 foto</div>
+                </div>
+              </div>
+
+              <div class="pickCard" role="radio" aria-checked="false" tabindex="0" data-layout="Polaroid">
+                <div class="pickIcon" aria-hidden="true">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                    <rect x="6" y="4" width="12" height="16" rx="2" stroke="#111827" stroke-width="2" />
+                    <path d="M8 14h8" stroke="#111827" stroke-width="2" stroke-linecap="round" />
+                  </svg>
+                </div>
+                <div class="pickMeta">
+                  <div class="t">Polaroid</div>
+                  <div class="d">Frame polaroid (umumnya 1 foto)</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="modeWrap" id="modeWrap">
+              <p class="modeTitle">Pilih jenis template</p>
+              <div class="modeCards" role="radiogroup" aria-label="Pick mode">
+                <div class="pickCard" role="radio" aria-checked="false" tabindex="0" data-mode="single">
+                  <div class="pickIcon" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                      <rect x="5" y="6" width="14" height="12" rx="2" stroke="#111827" stroke-width="2" />
+                    </svg>
+                  </div>
+                  <div class="pickMeta">
+                    <div class="t">Single Layout</div>
+                    <div class="d">Maksimal pilih 1 template</div>
+                  </div>
+                </div>
+
+                <div class="pickCard" role="radio" aria-checked="false" tabindex="0" data-mode="mix">
+                  <div class="pickIcon" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                      <rect x="4" y="6" width="16" height="12" rx="2" stroke="#111827" stroke-width="2" />
+                      <path d="M12 6v12M4 12h16" stroke="#111827" stroke-width="2" />
+                    </svg>
+                  </div>
+                  <div class="pickMeta">
+                    <div class="t">Mix Layout</div>
+                    <div class="d">Maksimal pilih 3 template</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="pickDivider"></div>
+            <div class="pickActions">
+              <button class="linkBtn" id="resetLayout" style="display:none;">Ganti layout</button>
+            </div>
+          </section>
+
+          <div id="app" style="display:none;">
+            <div class="top">
+              <div class="row">
+                <div class="search">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="2" />
+                    <path d="M16.5 16.5 21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                  </svg>
+                  <input id="q" placeholder="Cari nama file / template..." autocomplete="off" />
+                </div>
+
+                <div class="chips" id="chips"></div>
+
+                <button class="sortBtn" id="sortBtn" title="Urutkan A–Z / Z–A">
+                  <svg class="sortIcon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M7 6h10M7 12h7M7 18h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                  </svg>
+                  <span id="sortLabel">A–Z</span>
+                </button>
+
+                <button class="btn" id="clearAll">Clear all</button>
+              </div>
+            </div>
+
+            <div class="results">
+              <div class="resultsHead">
+                <div id="count">0 template</div>
+                <div><span class="pickedPill" id="pickedPill">Terpilih: 0/1</span></div>
+              </div>
+              <div class="grid" id="grid"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="../webphotobooth/main.js"></script>
+  <script src="./js/layout.js"></script>
+</body>
+</html>
