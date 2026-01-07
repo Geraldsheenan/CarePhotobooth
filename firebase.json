@@ -1,8 +1,13 @@
 {
-  "firestore": {
-    "database": "(default)",
-    "location": "asia-southeast2",
-    "rules": "firestore.rules",
-    "indexes": "firestore.indexes.json"
+  "hosting": {
+    "public": ".",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "redirects": [
+      {
+        "source": "/",
+        "destination": "/webphotobooth/index.html",
+        "type": 302
+      }
+    ]
   }
 }
